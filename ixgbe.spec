@@ -35,8 +35,8 @@ This package contains the Linux driver for the Intel(R) 10 Gigabit
 adapters with 82598 chipset.
 
 %description -l pl.UTF-8
-Ten pakiet zawiera sterownik dla Linuksa do kart sieciowych
-z rodziny Intel(R) 10 Gigabit opartych o układ 82598.
+Ten pakiet zawiera sterownik dla Linuksa do kart sieciowych z rodziny
+Intel(R) 10 Gigabit opartych o układ 82598.
 
 %package -n kernel%{_alt_kernel}-net-ixgbe
 Summary:	Intel(R) 10 Gigabit driver for Linux
@@ -54,8 +54,8 @@ This package contains the Linux driver for the Intel(R) 10 Gigabit
 adapters with 82598 chipset.
 
 %description -n kernel%{_alt_kernel}-net-ixgbe -l pl.UTF-8
-Ten pakiet zawiera sterownik dla Linuksa do kart sieciowych
-z rodziny Intel(R) 10 Gigabit opartych o układ 82598.
+Ten pakiet zawiera sterownik dla Linuksa do kart sieciowych z rodziny
+Intel(R) 10 Gigabit opartych o układ 82598.
 
 %prep
 %setup -q -n %{pname}-%{version}
