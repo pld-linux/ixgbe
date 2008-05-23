@@ -16,8 +16,8 @@
 
 %define		rel	1
 %define		pname	ixgbe
-Summary:	Intel(R) PRO/1000 driver for Linux
-Summary(pl.UTF-8):	Sterownik do karty Intel(R) PRO/1000
+Summary:	Intel(R) 10 Gigabit driver for Linux
+Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Name:		%{pname}%{_alt_kernel}
 Version:	1.3.20.3
 Release:	%{rel}
@@ -39,8 +39,8 @@ Ten pakiet zawiera sterownik dla Linuksa do kart sieciowych
 z rodziny Intel(R) 10 Gigabit opartych o układ 82598.
 
 %package -n kernel%{_alt_kernel}-net-ixgbe
-Summary:	Intel(R) PRO/1000 driver for Linux
-Summary(pl.UTF-8):	Sterownik do karty Intel(R) PRO/1000
+Summary:	Intel(R) 10 Gigabit driver for Linux
+Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Release:	%{rel}@%{_kernel_ver_str}
 Group:		Base/Kernel
 Requires(post,postun):	/sbin/depmod
