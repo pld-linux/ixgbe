@@ -14,17 +14,17 @@
 %undefine	with_userspace
 %endif
 
-%define		rel	7
+%define		rel	1
 %define		pname	ixgbe
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Name:		%{pname}%{_alt_kernel}
-Version:	1.3.56.5
+Version:	1.3.56.11
 Release:	%{rel}
 License:	GPL v2
 Group:		Base/Kernel
 Source0:	http://dl.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
-# Source0-md5:	ee143098c4e6173c4e77501744dda33f
+# Source0-md5:	2c33dc2dff1a9bc507a569485cb0389c
 URL:		http://sourceforge.net/projects/e1000/
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.379
