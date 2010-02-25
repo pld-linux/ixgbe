@@ -14,17 +14,17 @@
 %undefine	with_userspace
 %endif
 
-%define		rel	3
+%define		rel	1
 %define		pname	ixgbe
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Name:		%{pname}%{_alt_kernel}
-Version:	2.0.44.14
+Version:	2.0.62.4
 Release:	%{rel}
 License:	GPL v2
 Group:		Base/Kernel
 Source0:	http://dl.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
-# Source0-md5:	69470f5f3cf5bac0ff30b5dbb9fcef2a
+# Source0-md5:	9c6dcf0b903e4e0a5b8c47594c241e41
 URL:		http://sourceforge.net/projects/e1000/
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.379
@@ -62,8 +62,9 @@ Intel(R) 10 Gigabit opartych o układ 82598EB.
 cat > src/Makefile <<'EOF'
 obj-m := ixgbe.o
 ixgbe-objs := ixgbe_main.o ixgbe_common.o ixgbe_api.o ixgbe_param.o \
-ixgbe_ethtool.o kcompat.o ixgbe_82598.o ixgbe_82599.o ixgbe_dcb.o \
-ixgbe_dcb_nl.o ixgbe_dcb_82598.o ixgbe_dcb_82599.o ixgbe_phy.o
+ixgbe_ethtool.o kcompat.o ixgbe_82598.o ixgbe_82599.o ixgbe_sriov.o \
+ixgbe_mbx.o ixgbe_dcb.o ixgbe_dcb_82598.o ixgbe_dcb_82599.o ixgbe_phy.o \
+ixgbe_dcb_nl.o
 
 EXTRA_CFLAGS=-DDRIVER_IXGBE
 EOF
