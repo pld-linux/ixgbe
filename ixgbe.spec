@@ -14,7 +14,7 @@
 %undefine	with_userspace
 %endif
 
-%define		rel	1
+%define		rel	2
 %define		pname	ixgbe
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
@@ -59,11 +59,14 @@ Intel(R) 10 Gigabit opartych o układ 82598EB.
 
 %prep
 %setup -q -n %{pname}-%{version}
+cp src/Makefile src/Makefile.%{name}
 cat > src/Makefile <<'EOF'
 obj-m := ixgbe.o
 ixgbe-objs := ixgbe_main.o ixgbe_common.o ixgbe_api.o ixgbe_param.o \
-ixgbe_ethtool.o kcompat.o ixgbe_82598.o ixgbe_82599.o ixgbe_sriov.o \
-ixgbe_mbx.o ixgbe_dcb.o ixgbe_dcb_82598.o ixgbe_dcb_82599.o ixgbe_phy.o \
+ixgbe_lib.o ixgbe_ethtool.o kcompat.o ixgbe_82598.o \
+ixgbe_82599.o ixgbe_ptp.o ixgbe_x540.o ixgbe_sriov.o \
+ixgbe_mbx.o ixgbe_dcb.o ixgbe_dcb_82598.o ixgbe_dcb_82599.o \
+ixgbe_sysfs.o ixgbe_procfs.o ixgbe_phy.o ixgbe_fcoe.o \
 ixgbe_dcb_nl.o
 
 EXTRA_CFLAGS=-DDRIVER_IXGBE
