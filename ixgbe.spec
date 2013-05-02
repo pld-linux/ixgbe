@@ -14,7 +14,7 @@
 %undefine	with_userspace
 %endif
 
-%define		rel	14
+%define		rel	15
 %define		pname	ixgbe
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
