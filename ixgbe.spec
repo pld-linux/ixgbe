@@ -67,9 +67,10 @@ ixgbe_lib.o ixgbe_ethtool.o kcompat.o ixgbe_82598.o \
 ixgbe_82599.o ixgbe_ptp.o ixgbe_x540.o ixgbe_sriov.o \
 ixgbe_mbx.o ixgbe_dcb.o ixgbe_dcb_82598.o ixgbe_dcb_82599.o \
 ixgbe_sysfs.o ixgbe_procfs.o ixgbe_phy.o ixgbe_fcoe.o \
-ixgbe_dcb_nl.o
+ixgbe_dcb_nl.o ixgbe_dcb_nl.o ixgbe_debugfs.o
 
-EXTRA_CFLAGS=-DDRIVER_IXGBE
+EXTRA_CFLAGS+=-DDRIVER_IXGBE
+EXTRA_CFLAGS+=-DIXGBE_PTP
 EOF
 
 %build
