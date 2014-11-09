@@ -1,0 +1,14 @@
+--- ixgbe-3.22.3/src/ixgbe_ethtool.c~	2014-08-15 01:17:42.000000000 +0200
++++ ixgbe-3.22.3/src/ixgbe_ethtool.c	2014-11-09 16:24:37.428023145 +0100
+@@ -2881,7 +2881,11 @@
+ 
+ 	/* add filter to the list */
+ 	if (parent)
++#if ( LINUX_VERSION_CODE < KERNEL_VERSION(3,17,0) )
+ 		hlist_add_after(parent, &input->fdir_node);
++#else
++		hlist_add_behind(&input->fdir_node, parent);
++#endif
+ 	else
+ 		hlist_add_head(&input->fdir_node,
+ 			       &adapter->fdir_filter_list);
