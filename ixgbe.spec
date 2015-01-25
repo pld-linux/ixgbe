@@ -19,18 +19,17 @@ exit 1
 %define		bkpkg	%(echo %{_build_kernels} | tr , '\\n' | while read n ; do echo %%undefine alt_kernel ; [ -z "$n" ] || echo %%define alt_kernel $n ; echo %%build_kernel_pkg ; done)
 %define		ikpkg	%(echo %{_build_kernels} | tr , '\\n' | while read n ; do echo %%undefine alt_kernel ; [ -z "$n" ] || echo %%define alt_kernel $n ; echo %%install_kernel_pkg ; done)
 
-%define		rel	2
+%define		rel	1
 %define		pname	ixgbe
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Name:		%{pname}%{_alt_kernel}
-Version:	3.22.3
+Version:	3.23.2
 Release:	%{rel}@%{_kernel_ver_str}
 License:	GPL v2
 Group:		Base/Kernel
 Source0:	http://downloads.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
-# Source0-md5:	6ba474edde8c1fa205ee3b9a3af0587f
-Patch0:		linux-3.17.patch
+# Source0-md5:	bf70143cd1060698050745b212a1523e
 URL:		http://sourceforge.net/projects/e1000/
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.678
@@ -95,7 +94,6 @@ EOF\
 
 %prep
 %setup -q -n %{pname}-%{version}
-%patch0 -p1
 
 cp src/Makefile src/Makefile.%{name}
 cat > src/Makefile <<'EOF'
