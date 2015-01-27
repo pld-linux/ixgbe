@@ -1,5 +1,4 @@
 # Conditional build:
-%bcond_without	dist_kernel	# allow non-distribution kernel
 %bcond_with	verbose		# verbose build (V=1)
 
 %if "%{_alt_kernel}" != "%{nil}"
@@ -31,7 +30,7 @@ Group:		Base/Kernel
 Source0:	http://downloads.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
 # Source0-md5:	bf70143cd1060698050745b212a1523e
 URL:		http://sourceforge.net/projects/e1000/
-%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
+%{?with_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.678
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -50,10 +49,8 @@ Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit\
 Release:	%{rel}@%{_kernel_ver_str}\
 Group:		Base/Kernel\
 Requires(post,postun):	/sbin/depmod\
-%if %{with dist_kernel}\
 %requires_releq_kernel\
 Requires(postun):	%releq_kernel\
-%endif\
 \
 %description -n kernel%{_alt_kernel}-net-ixgbe\
 This package contains the Linux driver for the Intel(R) 10 Gigabit\
