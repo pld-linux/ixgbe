@@ -1,22 +1,8 @@
 # Conditional build:
 %bcond_with	verbose		# verbose build (V=1)
 
-%if "%{_alt_kernel}" != "%{nil}"
-%if 0%{?build_kernels:1}
-%{error:alt_kernel and build_kernels are mutually exclusive}
-exit 1
-%endif
-%global		_build_kernels		%{alt_kernel}
-%else
-%global		_build_kernels		%{?build_kernels:,%{?build_kernels}}
-%endif
-
 # nothing to be placed to debuginfo package
 %define		_enable_debug_packages	0
-
-%define		kpkg	%(echo %{_build_kernels} | tr , '\\n' | while read n ; do echo %%undefine alt_kernel ; [ -z "$n" ] || echo %%define alt_kernel $n ; echo %%kernel_pkg ; done)
-%define		bkpkg	%(echo %{_build_kernels} | tr , '\\n' | while read n ; do echo %%undefine alt_kernel ; [ -z "$n" ] || echo %%define alt_kernel $n ; echo %%build_kernel_pkg ; done)
-%define		ikpkg	%(echo %{_build_kernels} | tr , '\\n' | while read n ; do echo %%undefine alt_kernel ; [ -z "$n" ] || echo %%define alt_kernel $n ; echo %%install_kernel_pkg ; done)
 
 %define		rel	1
 %define		pname	ixgbe
@@ -30,8 +16,8 @@ Group:		Base/Kernel
 Source0:	http://downloads.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
 # Source0-md5:	bf70143cd1060698050745b212a1523e
 URL:		http://sourceforge.net/projects/e1000/
-%{?with_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
-BuildRequires:	rpmbuild(macros) >= 1.678
+%{expand:%buildrequires_kernel kernel%%{_alt_kernel}-module-build >= 3:2.6.20.2}
+BuildRequires:	rpmbuild(macros) >= 1.701
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,7 +73,7 @@ alias ixgbe ixgbe-current\
 EOF\
 %{nil}
 
-%{expand:%kpkg}
+%{expand:%create_kernel_packages}
 
 %prep
 %setup -q -n %{pname}-%{version}
@@ -107,13 +93,13 @@ EXTRA_CFLAGS+=-DIXGBE_PTP
 EOF
 
 %build
-%{expand:%bkpkg}
+%{expand:%build_kernel_packages}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT
 
-%{expand:%ikpkg}
+%{expand:%install_kernel_packages}
 cp -a installed/* $RPM_BUILD_ROOT
 
 %clean
