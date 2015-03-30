@@ -1,0 +1,57 @@
+--- ixgbe-3.23.2.1/src/ixgbe_main.c.orig	2015-03-30 20:07:50.662015699 +0200
++++ ixgbe-3.23.2.1/src/ixgbe_main.c	2015-03-30 20:12:33.988694214 +0200
+@@ -8874,10 +8874,17 @@
+ 
+ #ifdef HAVE_FDB_OPS
+ #ifdef USE_CONST_DEV_UC_CHAR
++#ifdef USE_NDO_DFLT_FDB_VID
++static int ixgbe_ndo_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
++			     struct net_device *dev,
++			     const unsigned char *addr,
++			     u16 flags, u16 vid)
++#else
+ static int ixgbe_ndo_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
+ 			     struct net_device *dev,
+ 			     const unsigned char *addr,
+ 			     u16 flags)
++#endif
+ #else
+ static int ixgbe_ndo_fdb_add(struct ndmsg *ndm,
+ 			     struct net_device *dev,
+@@ -8892,7 +8899,11 @@
+ 	}
+ 
+ #ifdef USE_CONST_DEV_UC_CHAR
++#ifdef USE_NDO_DFLT_FDB_VID
++	return ndo_dflt_fdb_add(ndm, tb, dev, addr, flags, vid);
++#else
+ 	return ndo_dflt_fdb_add(ndm, tb, dev, addr, flags);
++#endif
+ #else
+ 	return ndo_dflt_fdb_add(ndm, dev, addr, flags);
+ #endif
+@@ -8955,7 +8966,11 @@
+ 
+ 	mode = adapter->bridge_mode;
+ 
++#if ( LINUX_VERSION_CODE >= KERNEL_VERSION(3,19,0) )
++	return ndo_dflt_bridge_getlink(skb, pid, seq, dev, mode, 0, 0);
++#else
+ 	return ndo_dflt_bridge_getlink(skb, pid, seq, dev, mode);
++#endif
+ }
+ #endif /* HAVE_BRIDGE_ATTRIBS */
+ #endif /* HAVE_FDB_OPS */
+--- ixgbe-3.23.2.1/src/kcompat.h~	2015-02-18 23:06:34.000000000 +0100
++++ ixgbe-3.23.2.1/src/kcompat.h	2015-03-30 20:07:25.142014632 +0200
+@@ -3935,6 +3935,10 @@
+ #define USE_CONST_DEV_UC_CHAR
+ #endif /* >= 3.7.0 */
+ 
++#if ( LINUX_VERSION_CODE >= KERNEL_VERSION(3,19,0) )
++#define USE_NDO_DFLT_FDB_VID
++#endif
++
+ /*****************************************************************************/
+ #if ( LINUX_VERSION_CODE < KERNEL_VERSION(3,8,0) )
+ #ifndef pci_sriov_set_totalvfs
