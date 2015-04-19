@@ -9,13 +9,12 @@
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Name:		%{pname}%{_alt_kernel}
-Version:	3.23.2.1
+Version:	4.0.3
 Release:	%{rel}@%{_kernel_ver_str}
 License:	GPL v2
 Group:		Base/Kernel
 Source0:	http://downloads.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
-# Source0-md5:	bcec8bd3eb3abfa97d4fe00f272acd69
-Patch0:		linux-3.19.patch
+# Source0-md5:	fd81102645a6cbdea727a52f7b9d34f5
 URL:		http://sourceforge.net/projects/e1000/
 %{expand:%buildrequires_kernel kernel%%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.701
@@ -78,14 +77,13 @@ EOF\
 
 %prep
 %setup -q -n %{pname}-%{version}
-%patch0 -p1
 
 cp src/Makefile src/Makefile.%{name}
 cat > src/Makefile <<'EOF'
 obj-m := ixgbe.o
 ixgbe-objs := ixgbe_main.o ixgbe_common.o ixgbe_api.o ixgbe_param.o \
 ixgbe_lib.o ixgbe_ethtool.o kcompat.o ixgbe_82598.o \
-ixgbe_82599.o ixgbe_ptp.o ixgbe_x540.o ixgbe_sriov.o \
+ixgbe_82599.o ixgbe_ptp.o ixgbe_x540.o ixgbe_x550.o ixgbe_sriov.o \
 ixgbe_mbx.o ixgbe_dcb.o ixgbe_dcb_82598.o ixgbe_dcb_82599.o \
 ixgbe_sysfs.o ixgbe_procfs.o ixgbe_phy.o ixgbe_fcoe.o \
 ixgbe_dcb_nl.o ixgbe_dcb_nl.o ixgbe_debugfs.o
