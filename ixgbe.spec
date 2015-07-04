@@ -9,12 +9,13 @@
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Name:		%{pname}%{_alt_kernel}
-Version:	4.0.3
+Version:	4.1.1
 Release:	%{rel}@%{_kernel_ver_str}
 License:	GPL v2
 Group:		Base/Kernel
 Source0:	http://downloads.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
-# Source0-md5:	fd81102645a6cbdea727a52f7b9d34f5
+# Source0-md5:	a9f21c59f7189d3e0f3e97a8cd812670
+Patch0:		linux-4.1.patch
 URL:		http://sourceforge.net/projects/e1000/
 %{expand:%buildrequires_kernel kernel%%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.701
@@ -77,6 +78,7 @@ EOF\
 
 %prep
 %setup -q -n %{pname}-%{version}
+%patch0 -p1
 
 cp src/Makefile src/Makefile.%{name}
 cat > src/Makefile <<'EOF'
@@ -86,7 +88,7 @@ ixgbe_lib.o ixgbe_ethtool.o kcompat.o ixgbe_82598.o \
 ixgbe_82599.o ixgbe_ptp.o ixgbe_x540.o ixgbe_x550.o ixgbe_sriov.o \
 ixgbe_mbx.o ixgbe_dcb.o ixgbe_dcb_82598.o ixgbe_dcb_82599.o \
 ixgbe_sysfs.o ixgbe_procfs.o ixgbe_phy.o ixgbe_fcoe.o \
-ixgbe_dcb_nl.o ixgbe_dcb_nl.o ixgbe_debugfs.o
+ixgbe_dcb_nl.o ixgbe_debugfs.o
 
 EXTRA_CFLAGS+=-DDRIVER_IXGBE
 EXTRA_CFLAGS+=-DIXGBE_PTP

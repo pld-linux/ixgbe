@@ -1,0 +1,36 @@
+--- ixgbe-4.1.1/src/ixgbe_main.c~	2015-04-30 02:13:22.000000000 +0200
++++ ixgbe-4.1.1/src/ixgbe_main.c	2015-07-04 14:40:47.319817216 +0200
+@@ -9447,7 +9447,11 @@
+ 	return 0;
+ }
+ 
+-#ifdef HAVE_BRIDGE_FILTER
++#ifdef HAVE_NDO_BRIDGE_GETLINK_NLFLAGS
++static int ixgbe_ndo_bridge_getlink(struct sk_buff *skb, u32 pid, u32 seq,
++				  struct net_device *dev, u32 filter_mask,
++				  int nlflags)
++#elif defined(HAVE_BRIDGE_FILTER)
+ static int ixgbe_ndo_bridge_getlink(struct sk_buff *skb, u32 pid, u32 seq,
+ 				    struct net_device *dev,
+ 				    u32 __always_unused filter_mask)
+@@ -9464,7 +9464,9 @@
+ 
+ 	mode = adapter->bridge_mode;
+ 
+-#ifdef HAVE_NDO_FDB_ADD_VID
++#ifdef HAVE_NDO_BRIDGE_GETLINK_NLFLAGS
++	return ndo_dflt_bridge_getlink(skb, pid, seq, dev, mode, 0, 0, nlflags);
++#elif defined(HAVE_NDO_FDB_ADD_VID)
+ 	return ndo_dflt_bridge_getlink(skb, pid, seq, dev, mode, 0, 0);
+ #else
+ 	return ndo_dflt_bridge_getlink(skb, pid, seq, dev, mode);
+--- ixgbe-4.1.1/src/kcompat.h~	2015-04-30 02:13:22.000000000 +0200
++++ ixgbe-4.1.1/src/kcompat.h	2015-07-04 14:44:02.702152426 +0200
+@@ -4539,6 +4539,7 @@
+ #endif
+ #else
+ #define HAVE_PTP_CLOCK_INFO_GETTIME64
++#define HAVE_NDO_BRIDGE_GETLINK_NLFLAGS
+ #endif /* 4,1,0 */
+ 
+ #endif /* _KCOMPAT_H_ */
