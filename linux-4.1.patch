@@ -24,13 +24,3 @@
  	return ndo_dflt_bridge_getlink(skb, pid, seq, dev, mode, 0, 0);
  #else
  	return ndo_dflt_bridge_getlink(skb, pid, seq, dev, mode);
---- ixgbe-4.1.1/src/kcompat.h~	2015-04-30 02:13:22.000000000 +0200
-+++ ixgbe-4.1.1/src/kcompat.h	2015-07-04 14:44:02.702152426 +0200
-@@ -4539,6 +4539,7 @@
- #endif
- #else
- #define HAVE_PTP_CLOCK_INFO_GETTIME64
-+#define HAVE_NDO_BRIDGE_GETLINK_NLFLAGS
- #endif /* 4,1,0 */
- 
- #endif /* _KCOMPAT_H_ */
