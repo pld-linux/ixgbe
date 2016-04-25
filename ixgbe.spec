@@ -9,13 +9,12 @@
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
 Name:		%{pname}%{_alt_kernel}
-Version:	4.1.5
+Version:	4.3.15
 Release:	%{rel}@%{_kernel_ver_str}
 License:	GPL v2
 Group:		Base/Kernel
 Source0:	http://downloads.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
-# Source0-md5:	8b7b97e6556eebd13ca12d5cff72d1e9
-Patch0:		linux-4.1.9.patch
+# Source0-md5:	417392e2b42b183cea61752b69166d0c
 URL:		http://sourceforge.net/projects/e1000/
 %{expand:%buildrequires_kernel kernel%%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.701
@@ -78,7 +77,6 @@ EOF\
 
 %prep
 %setup -q -n %{pname}-%{version}
-%patch0 -p1
 
 cp src/Makefile src/Makefile.%{name}
 cat > src/Makefile <<'EOF'
