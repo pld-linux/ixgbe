@@ -4,7 +4,7 @@
 # nothing to be placed to debuginfo package
 %define		_enable_debug_packages	0
 
-%define		rel	1
+%define		rel	2
 %define		pname	ixgbe
 Summary:	Intel(R) 10 Gigabit driver for Linux
 Summary(pl.UTF-8):	Sterownik do karty Intel(R) 10 Gigabit
@@ -15,6 +15,7 @@ License:	GPL v2
 Group:		Base/Kernel
 Source0:	http://downloads.sourceforge.net/e1000/%{pname}-%{version}.tar.gz
 # Source0-md5:	e11e83c96afe846b5ee72c309a58e11f
+Patch0:		linux-4.6.patch
 URL:		http://sourceforge.net/projects/e1000/
 %{expand:%buildrequires_kernel kernel%%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.701
@@ -77,6 +78,7 @@ EOF\
 
 %prep
 %setup -q -n %{pname}-%{version}
+%patch0 -p1
 
 cp src/Makefile src/Makefile.%{name}
 cat > src/Makefile <<'EOF'

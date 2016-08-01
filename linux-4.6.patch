@@ -1,0 +1,14 @@
+--- ixgbe-4.4.6/src/ixgbe_main.c.orig	2016-06-02 00:50:01.000000000 +0200
++++ ixgbe-4.4.6/src/ixgbe_main.c	2016-08-01 20:57:46.424973720 +0200
+@@ -1656,7 +1656,11 @@
+ 	/* Even if we own the page, we are not allowed to use atomic_set()
+ 	 * This would break get_page_unless_zero() users.
+ 	 */
++#if (LINUX_VERSION_CODE < KERNEL_VERSION(4,6,0))
+ 	atomic_inc(&page->_count);
++#else
++	page_ref_inc(page);
++#endif
+ 
+ 	return true;
+ }
